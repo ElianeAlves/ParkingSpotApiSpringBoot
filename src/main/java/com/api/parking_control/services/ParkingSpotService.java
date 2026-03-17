@@ -1,0 +1,50 @@
+package com.api.parking_control.services;
+
+import com.api.parking_control.models.ParkingSpotModel;
+import com.api.parking_control.repositories.ParkingSpotRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+@Service
+public class ParkingSpotService {
+
+    final ParkingSpotRepository parkingSpotRepository;
+
+    public ParkingSpotService(ParkingSpotRepository parkingSpotRepository) {
+        this.parkingSpotRepository = parkingSpotRepository;
+    }
+
+    public List<ParkingSpotModel> findAllParkingSpot() {
+        return parkingSpotRepository.findAll();
+    }
+
+    public Optional<ParkingSpotModel> findById(UUID id) {
+        return parkingSpotRepository.findById(id);
+    }
+
+    @Transactional
+    public ParkingSpotModel save(ParkingSpotModel parkingSpotModel) {
+        return parkingSpotRepository.save(parkingSpotModel);
+    }
+
+    @Transactional
+    public void deleteById(ParkingSpotModel parkingSpotModel) {
+        parkingSpotRepository.delete(parkingSpotModel);
+    }
+
+    public boolean existsByLicensePlateCar(String licensePlateCar) {
+        return parkingSpotRepository.existsByLicensePlateCar(licensePlateCar);
+    }
+
+    public boolean existsByParkingSpotNumber(String parkingSpotNumber) {
+        return parkingSpotRepository.existsByParkingSpotNumber(parkingSpotNumber);
+    }
+
+    public boolean existsByApartmentAndBlock(String apartment, String block) {
+        return parkingSpotRepository.existsByApartmentAndBlock(apartment, block);
+    }
+}
